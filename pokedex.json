@@ -1,0 +1,943 @@
+{
+    "Bulbasaur": {
+        "number": 1,
+        "primary": "Grass",
+        "secondary": "Poison",
+        "description": "Seed Pokémon",
+        "entry": "A strange seed was planted on its back at birth. The plant sprouts and grows with this POKéMON.",
+        "height": "0.71 m",
+        "weight": "6.9 kg",
+        "base stats": {
+            "HP": 45,
+            "Attack": 49,
+            "Defense": 49,
+            "Sp. Attack": 65,
+            "Sp. Defense": 65,
+            "Speed": 45
+        },
+        "evolve condition": "level >= 16",
+        "evolves into": "Ivysaur",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Tackle",
+                    "Growl"
+                ],
+                "7": "Leech Seed",
+                "13": "Vine Whip",
+                "20": "Poison Powder",
+                "27": "Razor Leaf",
+                "34": "Growth",
+                "41": "Sleep Powder",
+                "48": "Solar Beam"
+            },
+            "TM/HM": [
+                "TM03",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM20",
+                "TM21",
+                "TM22",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM44",
+                "TM50",
+                "HM01"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 1,
+            "Sp. Defense": 0,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 64,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Grass",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Ivysaur": {
+        "number": 2,
+        "primary": "Grass",
+        "secondary": "Poison",
+        "description": "Seed Pokémon",
+        "entry": "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
+        "height": "0.99 m",
+        "weight": "13.0 kg",
+        "base stats": {
+            "HP": 60,
+            "Attack": 62,
+            "Defense": 63,
+            "Sp. Attack": 80,
+            "Sp. Defense": 80,
+            "Speed": 60
+        },
+        "evolve condition": "level >= 32",
+        "evolves into": "Venusaur",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Tackle",
+                    "Growl",
+                    "Leech Seed"
+                ],
+                "7": "Leech Seed",
+                "13": "Vine Whip",
+                "22": "Poison Powder",
+                "30": "Razor Leaf",
+                "38": "Growth",
+                "46": "Sleep Powder",
+                "54": "Solar Beam"
+            },
+            "TM/HM": [
+                "TM03",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM20",
+                "TM21",
+                "TM22",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM44",
+                "TM50",
+                "HM01"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 1,
+            "Sp. Defense": 1,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 142,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Grass",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Venusaur": {
+        "number": 3,
+        "primary": "Grass",
+        "secondary": "Poison",
+        "description": "Seed Pokémon",
+        "entry": "The plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
+        "height": "2.01 m",
+        "weight": "100.0 kg",
+        "base stats": {
+            "HP": 80,
+            "Attack": 82,
+            "Defense": 83,
+            "Sp. Attack": 100,
+            "Sp. Defense": 100,
+            "Speed": 80
+        },
+        "evolve condition": "none",
+        "evolves into": "none",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Vine Whip",
+                    "Tackle",
+                    "Growl",
+                    "Leech Seed"
+                ],
+                "7": "Leech Seed",
+                "13": "Vine Whip",
+                "22": "Poison Powder",
+                "30": "Razor Leaf",
+                "43": "Growth",
+                "55": "Sleep Powder",
+                "65": "Solar Beam"
+            },
+            "TM/HM": [
+                "TM03",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM15",
+                "TM20",
+                "TM21",
+                "TM22",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM44",
+                "TM50",
+                "HM01"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 2,
+            "Sp. Defense": 1,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 236,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Grass",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Charmander": {
+        "number": 4,
+        "primary": "Fire",
+        "secondary": "none",
+        "description": "Lizard Pokémon",
+        "entry": "Obviously prefers hot places. When it rains, steam is said to spout from the tip of its tail.",
+        "height": "0.61 m",
+        "weight": "8.5 kg",
+        "base stats": {
+            "HP": 39,
+            "Attack": 52,
+            "Defense": 43,
+            "Sp. Attack": 60,
+            "Sp. Defense": 50,
+            "Speed": 65
+        },
+        "evolve condition": "level >= 16",
+        "evolves into": "Charmeleon",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Scratch",
+                    "Growl"
+                ],
+                "9": "Ember",
+                "15": "Leer",
+                "22": "Rage",
+                "30": "Slash",
+                "38": "Flamethrower",
+                "46": "Fire Spin"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM03",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM17",
+                "TM18",
+                "TM19",
+                "TM20",
+                "TM23",
+                "TM28",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM38",
+                "TM39",
+                "TM40",
+                "TM44",
+                "TM50",
+                "HM01",
+                "HM04"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 0,
+            "Sp. Defense": 0,
+            "Speed": 1
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 62,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Dragon",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Charmeleon": {
+        "number": 5,
+        "primary": "Fire",
+        "secondary": "none",
+        "description": "Flame Pokémon",
+        "entry": "When it swings its burning tail, it elevates the temperature to unbearably high levels.",
+        "height": "1.09 m",
+        "weight": "19.0 kg",
+        "base stats": {
+            "HP": 58,
+            "Attack": 64,
+            "Defense": 58,
+            "Sp. Attack": 80,
+            "Sp. Defense": 65,
+            "Speed": 80
+        },
+        "evolve condition": "level >= 36",
+        "evolves into": "Charizard",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Scratch",
+                    "Growl",
+                    "Ember"
+                ],
+                "9": "Ember",
+                "15": "Leer",
+                "24": "Rage",
+                "33": "Slash",
+                "42": "Flamethrower",
+                "56": "Fire Spin"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM03",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM17",
+                "TM18",
+                "TM19",
+                "TM20",
+                "TM23",
+                "TM28",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM38",
+                "TM39",
+                "TM40",
+                "TM44",
+                "TM50",
+                "HM01",
+                "HM04"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 1,
+            "Sp. Defense": 0,
+            "Speed": 1
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 142,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Dragon",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Charizard": {
+        "number": 6,
+        "primary": "Fire",
+        "secondary": "Flying",
+        "description": "Flame Pokémon",
+        "entry": "Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.",
+        "height": "1.70 m",
+        "weight": "90.5 kg",
+        "base stats": {
+            "HP": 78,
+            "Attack": 84,
+            "Defense": 78,
+            "Sp. Attack": 109,
+            "Sp. Defense": 85,
+            "Speed": 100
+        },
+        "evolve condition": "none",
+        "evolves into": "none",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Scratch",
+                    "Leer",
+                    "Growl",
+                    "Ember"
+                ],
+                "9": "Ember",
+                "15": "Leer",
+                "24": "Rage",
+                "36": "Slash",
+                "46": "Flamethrower",
+                "55": "Fire Spin"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM03",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM15",
+                "TM17",
+                "TM18",
+                "TM19",
+                "TM20",
+                "TM23",
+                "TM26",
+                "TM27",
+                "TM28",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM38",
+                "TM39",
+                "TM40",
+                "TM44",
+                "TM50",
+                "HM01",
+                "HM04"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 3,
+            "Sp. Defense": 0,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 240,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Dragon",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Squirtle": {
+        "number": 7,
+        "primary": "Water",
+        "secondary": "none",
+        "description": "Tiny Turtle Pokémon",
+        "entry": "After birth, its back swells and hardens into a shell. Powerfully sprays foam from its mouth.",
+        "height": "0.51 m",
+        "weight": "9.0 kg",
+        "base stats": {
+            "HP": 44,
+            "Attack": 48,
+            "Defense": 65,
+            "Sp. Attack": 50,
+            "Sp. Defense": 64,
+            "Speed": 43
+        },
+        "evolve condition": "level >= 16",
+        "evolves into": "Wartortle",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Tackle",
+                    "Tail Whip"
+                ],
+                "8": "Bubble",
+                "15": "Water Gun",
+                "22": "Bite",
+                "28": "Withdraw",
+                "35": "Skull Bash",
+                "42": "Hydro Pump"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM11",
+                "TM12",
+                "TM13",
+                "TM14",
+                "TM17",
+                "TM18",
+                "TM19",
+                "TM20",
+                "TM28",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM40",
+                "TM44",
+                "TM50",
+                "HM03",
+                "HM04"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 1,
+            "Sp. Attack": 0,
+            "Sp. Defense": 0,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 63,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Water 1",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Wartortle": {
+        "number": 8,
+        "primary": "Water",
+        "secondary": "none",
+        "description": "Turtle Pokémon",
+        "entry": "Often hides in water to stalk unwary prey. For swimming fast, it moves its ears to maintain balance.",
+        "height": "0.99 m",
+        "weight": "22.5 kg",
+        "base stats": {
+            "HP": 59,
+            "Attack": 63,
+            "Defense": 80,
+            "Sp. Attack": 65,
+            "Sp. Defense": 80,
+            "Speed": 58
+        },
+        "evolve condition": "level >= 36",
+        "evolves into": "Blastoise",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Tackle",
+                    "Tail Whip",
+                    "Bubble"
+                ],
+                "8": "Bubble",
+                "15": "Water Gun",
+                "24": "Bite",
+                "31": "Withdraw",
+                "39": "Skull Bash",
+                "47": "Hydro Pump"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM11",
+                "TM12",
+                "TM13",
+                "TM14",
+                "TM17",
+                "TM18",
+                "TM19",
+                "TM20",
+                "TM28",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM40",
+                "TM44",
+                "TM50",
+                "HM03",
+                "HM04"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 1,
+            "Sp. Attack": 0,
+            "Sp. Defense": 1,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 142,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Water 1",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Blastoise": {
+        "number": 9,
+        "primary": "Water",
+        "secondary": "none",
+        "description": "Shellfish Pokémon",
+        "entry": "A brutal POKéMON with pressurized water jets on its shell. They are used for high speed tackles",
+        "height": "1.60 m",
+        "weight": "85.5 kg",
+        "base stats": {
+            "HP": 79,
+            "Attack": 83,
+            "Defense": 100,
+            "Sp. Attack": 85,
+            "Sp. Defense": 105,
+            "Speed": 78
+        },
+        "evolve condition": "none",
+        "evolves into": "none",
+        "Loacations": [
+            "none"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Tackle",
+                    "Tail Whip",
+                    "Water Gun",
+                    "Bubble"
+                ],
+                "8": "Bubble",
+                "15": "Water Gun",
+                "24": "Bite",
+                "31": "Withdraw",
+                "42": "Skull Bash",
+                "52": "Hydro Pump"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM11",
+                "TM12",
+                "TM13",
+                "TM14",
+                "TM15",
+                "TM17",
+                "TM18",
+                "TM19",
+                "TM20",
+                "TM26",
+                "TM27",
+                "TM28",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM40",
+                "TM44",
+                "TM50",
+                "HM03",
+                "HM04"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 0,
+            "Sp. Defense": 3,
+            "Speed": 0
+        },
+        "Catch Rate": 45,
+        "Growth Rate": "Medium Slow",
+        "Base Happiness": 70,
+        "Base Experience": 239,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 87.5,
+                "Female": 12.5
+            },
+            "Egg Groups": [
+                "Water 1",
+                "Monster"
+            ],
+            "Egg Cycles": 21
+        }
+    },
+    "Pikachu": {
+        "number": 25,
+        "primary": "Electric",
+        "secondary": "none",
+        "description": "Mouse Pokémon",
+        "entry": "When several of these POKéMON gather, their electricity could build and cause lightning storms.",
+        "height": "0.41 m",
+        "weight": "6.0 kg",
+        "base stats": {
+            "HP": 35,
+            "Attack": 55,
+            "Defense": 40,
+            "Sp. Attack": 50,
+            "Sp. Defense": 50,
+            "Speed": 90
+        },
+        "evolve condition": "Item: Thunder Stone",
+        "evolves into": "Raichu",
+        "Loacations": [
+            "Viridian Forest",
+            "Power Plant"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Growl",
+                    "Thunder Shock"
+                ],
+                "9": "Thunder Wave",
+                "16": "Quick Attack",
+                "26": "Swift",
+                "33": "Agility",
+                "43": "Thunder"
+            },
+            "TM/HM": [
+                "TM01",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM16",
+                "TM17",
+                "TM19",
+                "TM20",
+                "TM24",
+                "TM25",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM39",
+                "TM40",
+                "TM44",
+                "TM45",
+                "TM50",
+                "HM05"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 0,
+            "Sp. Defense": 0,
+            "Speed": 2
+        },
+        "Catch Rate": 190,
+        "Growth Rate": "Medium",
+        "Base Happiness": 70,
+        "Base Experience": 112,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 50.0,
+                "Female": 50.0
+            },
+            "Egg Groups": [
+                "Fairy",
+                "Field"
+            ],
+            "Egg Cycles": 11
+        }
+    },
+    "Raichu": {
+        "number": 26,
+        "primary": "Electric",
+        "secondary": "none",
+        "description": "Mouse Pokémon",
+        "entry": "Its long tail serves as a ground to protect itself from its own high voltage power.",
+        "height": "0.79 m",
+        "weight": "30.0 kg",
+        "base stats": {
+            "HP": 60,
+            "Attack": 90,
+            "Defense": 55,
+            "Sp. Attack": 90,
+            "Sp. Defense": 80,
+            "Speed": 110
+        },
+        "evolve condition": "none",
+        "evolves into": "none",
+        "Loacations": [
+            "Cerulean Cave"
+        ],
+        "moves": {
+            "level": {
+                "1": [
+                    "Growl",
+                    "Thunder Shock",
+                    "Thunder Wave"
+                ]
+            },
+            "TM/HM": [
+                "TM01",
+                "TM05",
+                "TM06",
+                "TM08",
+                "TM09",
+                "TM10",
+                "TM15",
+                "TM16",
+                "TM17",
+                "TM19",
+                "TM20",
+                "TM24",
+                "TM25",
+                "TM31",
+                "TM32",
+                "TM33",
+                "TM34",
+                "TM39",
+                "TM40",
+                "TM44",
+                "TM45",
+                "TM50",
+                "HM05"
+            ],
+            "Egg": [],
+            "Tutor": []
+        },
+        "EV Yield": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "Sp. Attack": 0,
+            "Sp. Defense": 0,
+            "Speed": 3
+        },
+        "Catch Rate": 75,
+        "Growth Rate": "Medium",
+        "Base Happiness": 70,
+        "Base Experience": 218,
+        "Breeding": {
+            "Gender Ratio": {
+                "Male": 50.0,
+                "Female": 50.0
+            },
+            "Egg Groups": [
+                "Fairy",
+                "Field"
+            ],
+            "Egg Cycles": 11
+        }
+    }
+}
