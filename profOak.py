@@ -66,11 +66,13 @@ async def starter(context, *, selection=None):
     username = author.name
     filename = f"{directories.players_directory}{username}.toml"
 
-    # Load the existing player save file
-    with open(filename, 'r') as file:
-        data = toml.load(file)
-    
-        # Check if a starter has already been selected
+    try:
+
+        # Load the existing player save file
+        with open(filename, 'r') as file:
+            data = toml.load(file)
+        
+        # Check if a starter has already been selectedZ
         if "pokemon" in data and len(data["pokemon"]) > 0:
             if data["pokemon"][0]["name"] == "":
                 if selection is None:
@@ -104,6 +106,9 @@ async def starter(context, *, selection=None):
                             await author.send("Invalid selection, please try again!")
             else:
                 await author.send("You cannot choose a second starter!")
+    
+    except FileNotFoundError:
+        await author.send("You must use !ready to create a save file before you can play!")
 
 @bot.command()
 async def viewParty(context):
@@ -111,9 +116,11 @@ async def viewParty(context):
     username = author.name
     filename = f"{directories.players_directory}{username}.toml"
 
-    # Load the existing player save file
-    with open(filename, 'r') as file:
-        data = toml.load(file)
+    try:
+
+        # Load the existing player save file
+        with open(filename, 'r') as file:
+            data = toml.load(file)
 
         message = ""
         for i in range(6):
@@ -127,5 +134,8 @@ async def viewParty(context):
             await author.send("Your party is empty!")
         else:
             await author.send(message)
+
+    except FileNotFoundError:
+        await author.send("You must use !ready to create a save file before you can play!")
 
 bot.run(BOT_TOKEN)
