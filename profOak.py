@@ -105,4 +105,27 @@ async def starter(context, *, selection=None):
         else:
             await author.send("You cannot choose a second starter!")
 
+@bot.command()
+async def viewParty(context):
+    author = context.author
+    username = author.name
+    filename = f"{directories.players_directory}{username}.toml"
+
+    # Load the existing player save file
+    with open(filename, 'r') as file:
+        data = toml.load(file)
+
+        message = ""
+        for i in range(6):
+            if data["pokemon"][i]["name"] == "":
+                # Formatting
+                if i > 0:
+                    message += "\n"
+                    # Message contains the pokemon name and current HP
+                message += f"{data["pokemon"][i]["name"]} \nHP: {data["pokemon"][i]["currentHP"]}"
+        if message == "":
+            await author.send("Your party is empty!")
+        else:
+            await author.send(message)
+
 bot.run(BOT_TOKEN)
