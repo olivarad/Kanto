@@ -70,40 +70,40 @@ async def starter(context, *, selection=None):
     with open(filename, 'r') as file:
         data = toml.load(file)
     
-    # Check if a starter has already been selected
-    if "pokemon" in data and len(data["pokemon"]) > 0:
-        if data["pokemon"][0]["name"] == "":
-            if selection is None:
-                await author.send("The options are as follows \
-                                \nBulbasaur \
-                                \nCharmander \
-                                \nSquirtle \
-                                \nPikachu \
-                                \nWhen you are ready to select use the command again followed by your selection, ex. (!starter Pikachu)")
+        # Check if a starter has already been selected
+        if "pokemon" in data and len(data["pokemon"]) > 0:
+            if data["pokemon"][0]["name"] == "":
+                if selection is None:
+                    await author.send("The options are as follows \
+                                    \nBulbasaur \
+                                    \nCharmander \
+                                    \nSquirtle \
+                                    \nPikachu \
+                                    \nWhen you are ready to select use the command again followed by your selection, ex. (!starter Pikachu)")
+                else:
+                    match selection.upper():
+                        case "BULBASAUR":
+                            starter = pokemon.Pokemon("Bulbasaur", 5)
+                            party.addPartyMember(username, starter)
+                            await author.send("You have chosen bulbasaur!")
+                        case "CHARMANDER":
+                            starter = pokemon.Pokemon("Charmander", 5)
+                            party.addPartyMember(username, starter)
+                            await author.send("You have chosen charmander!")
+                        case "SQUIRTLE":
+                            starter = pokemon.Pokemon("Squirtle", 5)
+                            party.addPartyMember(username, starter)
+                            await author.send("You have chosen Squirtle!")
+                        case "PIKACHU":
+                            starter = pokemon.Pokemon("Pikachu", 5)
+                            party.addPartyMember(username, starter)
+                            await author.send("You have chosen Pikachu!")
+                        case "MIKUCHU":
+                            await author.send("FUCK PIKACHU, GIVE ME MIKUCHU!")
+                        case _:
+                            await author.send("Invalid selection, please try again!")
             else:
-                match selection.upper():
-                    case "BULBASAUR":
-                        starter = pokemon.Pokemon("Bulbasaur", 5)
-                        party.addPartyMember(username, starter)
-                        await author.send("You have chosen bulbasaur!")
-                    case "CHARMANDER":
-                        starter = pokemon.Pokemon("Charmander", 5)
-                        party.addPartyMember(username, starter)
-                        await author.send("You have chosen charmander!")
-                    case "SQUIRTLE":
-                        starter = pokemon.Pokemon("Squirtle", 5)
-                        party.addPartyMember(username, starter)
-                        await author.send("You have chosen Squirtle!")
-                    case "PIKACHU":
-                        starter = pokemon.Pokemon("Pikachu", 5)
-                        party.addPartyMember(username, starter)
-                        await author.send("You have chosen Pikachu!")
-                    case "MIKUCHU":
-                        await author.send("FUCK PIKACHU, GIVE ME MIKUCHU!")
-                    case _:
-                        await author.send("Invalid selection, please try again!")
-        else:
-            await author.send("You cannot choose a second starter!")
+                await author.send("You cannot choose a second starter!")
 
 @bot.command()
 async def viewParty(context):
