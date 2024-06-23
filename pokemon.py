@@ -1,6 +1,6 @@
 import json
 from random import randint
-from math import sqrt
+from math import sqrt, floor, ceil
 
 class Pokemon:
     def __init__(self, name: str, level: int):
@@ -68,10 +68,10 @@ class Pokemon:
             
     
     def calcStat(self, base, IV, EV, level):
-        return (((base + IV) * 2 + sqrt(EV) / 4) * level / 100 + 5)
+        return floor(((base + IV) * 2 + floor(ceil(sqrt(EV))/4) * level) / 100) + 5
     
     def calcMaxHealth(self, base, IV, EV, level):
-        return (((base + IV) * 2 + sqrt(EV) / 4 + 100) * level / 100 + 10)
+        return floor(((base + IV) * 2 + floor(ceil(sqrt(EV))/4) * level) / 100) + level + 10
     
     def loadPokemonTOML(self, slot):
         slot["name"] = self.name
