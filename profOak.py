@@ -20,6 +20,10 @@ async def on_member_join(member):
     channel = bot.get_channel(WELCOME_CHANNEL_ID)
     await channel.send(f"Welcome {member.name} to Kanto, type !ready when you would like your pokemon journey to begin!")
 
+
+"""
+Direct message processing
+"""
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -41,7 +45,8 @@ async def commands(context):
     await context.send(f"Commands: \
                         \n!commands: See commands \
                         \n!ready: Begin your pokemon journey (can not be used more than once) \
-                        \n!starter: Indicate that you would like to choose your starter pokemon")
+                        \n!starter: Indicate that you would like to choose your starter pokemon \
+                        \n!viewParty: View your party")
 
 @bot.command()
 async def ready(context):
@@ -60,6 +65,14 @@ async def ready(context):
                     await author.send("A save file for pokemon Kanto has been created for you!")
         await author.send("Pokemon Kanto is played by sending me DMs, for help with commands, please type !commands!")
 
+
+"""
+If no selection is given, the bot will display starter choices
+If a selection is given, the bot will add that to the players first party slot, provided they have not already recieved a starter and that it is a valid starter choice
+
+Args:
+    selection (optional)
+"""
 @bot.command()
 async def starter(context, *, selection=None):
     author = context.author
@@ -110,6 +123,10 @@ async def starter(context, *, selection=None):
     except FileNotFoundError:
         await author.send("You must use !ready to create a save file before you can play!")
 
+"""
+If the player has a party, a message will be sent to them containing each party member and their currentHP
+If the pplayer does not have a party, a message will be sent to them about creating a save file and selecting a starter
+"""
 @bot.command()
 async def viewParty(context):
     author = context.author
@@ -136,6 +153,6 @@ async def viewParty(context):
             await author.send(message)
 
     except FileNotFoundError:
-        await author.send("You must use !ready to create a save file before you can play!")
+        await author.send("You must use !ready to create a save file then choose your starter with !starter before you can play!")
 
 bot.run(BOT_TOKEN)

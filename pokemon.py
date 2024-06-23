@@ -14,13 +14,17 @@ class Pokemon:
         self.getMovesByLevel(self.pokedexEntry, level)
         self.initMoves()
 
+    """
+    Obtain a pokedex entry from pokedex.json
 
-    def getPokedexEntry(self, name):
+    Args:
+        name (string): the name of the pokedex entry
+    """
+    def getPokedexEntry(self, name: str):
         with open("pokedex.json", "r") as file:
             data = json.load(file)
             self.pokedexEntry = data[name]
         
-
     def calcIVs(self):
         self.attackIV = randint(0, 15)
         self.defenseIV = randint(0, 15)
@@ -39,6 +43,12 @@ class Pokemon:
         self.specialEV = 0
         self.healthEV = 0
     
+    """
+    Calculation of generation 1 pokemon based stats using a pokedex entry and the genration one pokemon stat calculation helper functions named calcStat and calcMaxHealth
+    
+    Args:
+        pokedexEntry (Loaded in json data): data pertaining to the pokemon being processed
+    """
     def calcStats(self, pokedexEntry):
         self.attackStat = self.calcStat(pokedexEntry["base stats"]["Attack"], self.attackIV, self.attackEV, self.level)
         self.defenseStat = self.calcStat(pokedexEntry["base stats"]["Defense"], self.defenseIV, self.defenseEV, self.level)
@@ -47,7 +57,14 @@ class Pokemon:
         self.specialDefenseStat = self.calcStat(pokedexEntry["base stats"]["Sp. Defense"], self.specialIV, self.specialEV, self.level)
         self.maxHealthStat = self.calcMaxHealth(pokedexEntry["base stats"]["HP"], self.healthIV, self.healthEV, self.level)
     
-    def getMovesByLevel(self, pokedexEntry, level):
+    """
+    Fills information for every possible level move for the pokemon and the current ones it would have had access to by now
+
+    Args:
+        pokedexEntry (Loaded in json data): data pertaining to the pokemon being processed
+        level (int): the current level of the pokemon being processed
+    """
+    def getMovesByLevel(self, pokedexEntry, level: int):
         self.possibleLevelMoves = pokedexEntry["moves"]["level"]
         self.levelMoves = []
 
@@ -58,6 +75,10 @@ class Pokemon:
                 else:
                     self.levelMoves.append(move)
 
+    """
+    A pokemon will be initialized with the last 4 possible level moves it would have attained through natural leveling
+    If 4 moves are not available, the pokemon will have acces to the available moves at that time
+    """
     def initMoves(self):
         self.moves = []
         if len(self.levelMoves) <= 4:
@@ -66,13 +87,37 @@ class Pokemon:
             for i in range(4):
                 self.moves.append(self.levelMoves[-4 + i])
             
-    
-    def calcStat(self, base, IV, EV, level):
+    """
+    Generation one general stat calculation helper function
+
+    Args:
+        base (int): the base stat pokedex entry for the pokemon being processed
+        IV (int): the Individual Value for the stat of the pokemon being processed
+        EV (int): the Effort Value for the stat of the pokemon being processed
+        level (int): the current level of the pokemon being processed
+    """
+    def calcStat(self, base: int, IV: int, EV: int, level: int):
         return floor(((base + IV) * 2 + floor(ceil(sqrt(EV))/4) * level) / 100) + 5
     
-    def calcMaxHealth(self, base, IV, EV, level):
+    """
+    Generation one health stat calculation helper function
+
+    Args:
+        base (int): the base stat pokedex entry for the pokemon being processed
+        IV (int): the Individual Value for the stat of the pokemon being processed
+        EV (int): the Effort Value for the stat of the pokemon being processed
+        level (int): the current level of the pokemon being processed
+    """
+    def calcMaxHealth(self, base: int, IV: int, EV: int, level: int):
         return floor(((base + IV) * 2 + floor(ceil(sqrt(EV))/4) * level) / 100) + level + 10
     
+    """
+    Load the pokemon class member data into a TOML save file
+    The data is loaded but not saved
+
+    Args:
+        slot (A section of a TOML file contiaining the slot (PC or Party) for the pokemon)
+    """
     def loadPokemonTOML(self, slot):
         slot["name"] = self.name
         slot["primary"] = self.pokedexEntry["primary"]
