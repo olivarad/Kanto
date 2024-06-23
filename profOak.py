@@ -134,14 +134,13 @@ async def viewParty(context):
     filename = f"{directories.players_directory}{username}.toml"
 
     try:
-
         # Load the existing player save file
         with open(filename, 'r') as file:
             data = toml.load(file)
 
         message = ""
         for i in range(6):
-            if data["pokemon"][i]["name"] == "":
+            if data["pokemon"][i]["name"] != "":
                 # Formatting
                 if i > 0:
                     message += "\n"
