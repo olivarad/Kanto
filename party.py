@@ -1,6 +1,12 @@
 import directories
 import toml
 import pokemon
+import player
+
+# Acceptable Starters
+acceptableStarters = {
+    "BULBASAUR", "CHARMANDER", "SQUIRTLE", "PIKACHU"
+}
 
 """
 Add a pokemon to a players party
@@ -12,20 +18,13 @@ Args:
 """
 def addPartyMember(username: str, pokemon: pokemon.Pokemon):
     filename = f"{directories.players_directory}{username}.toml"
-    try:
-        # Load the existing player save file
-        with open(filename, 'r') as file:
-            data = toml.load(file)
-            
+    data = player.loadSave(username)
+    if data is not None:
         # Check for an open slot and fill it
         # TODO If no open slot is found add it to the pc
-        for partySlot in data.get("pokemon", []):
+        playerParty = player.getParty(data)
+        for partySlot in playerParty:
             if partySlot.get("name", "") == "":
                 pokemon.loadPokemonTOML(partySlot)
                 break
-
-        # Write the updated data back to the TOML file
-        with open(filename, 'w') as file:
-            toml.dump(data, file)
-    except FileNotFoundError:
-        pass
+        player.saveData(username, data)

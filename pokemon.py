@@ -47,7 +47,7 @@ class Pokemon:
     Calculation of generation 1 pokemon based stats using a pokedex entry and the genration one pokemon stat calculation helper functions named calcStat and calcMaxHealth
     
     Args:
-        pokedexEntry (Loaded in json data): data pertaining to the pokemon being processed
+        pokedexEntry (dict of loaded in json data): data pertaining to the pokemon being processed
     """
     def calcStats(self, pokedexEntry):
         self.attackStat = self.calcStat(pokedexEntry["base stats"]["Attack"], self.attackIV, self.attackEV, self.level)
@@ -61,7 +61,7 @@ class Pokemon:
     Fills information for every possible level move for the pokemon and the current ones it would have had access to by now
 
     Args:
-        pokedexEntry (Loaded in json data): data pertaining to the pokemon being processed
+        pokedexEntry (dict of loaded in json data): data pertaining to the pokemon being processed
         level (int): the current level of the pokemon being processed
     """
     def getMovesByLevel(self, pokedexEntry, level: int):
@@ -116,7 +116,7 @@ class Pokemon:
     The data is loaded but not saved
 
     Args:
-        slot (A section of a TOML file contiaining the slot (PC or Party) for the pokemon)
+        slot (A dict from a toml file contiaining the slot (PC or Party) for the pokemon)
     """
     def loadPokemonTOML(self, slot):
         slot["name"] = self.name
