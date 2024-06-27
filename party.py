@@ -91,7 +91,7 @@ Args:
 Returns:
     A message indicating that they either do not have a savefile, their party is empty, or showing the party
 """
-def showParty(username: str):
+def viewParty(username: str):
     data = player.loadSave(username)
     if data is not None:
         playerParty = getParty(data)
@@ -110,3 +110,31 @@ def showParty(username: str):
             return message
     else:
         return "You must use !ready to create a save file then choose your starter with !starter before you can play!"
+    
+"""
+Swap two members in a players party
+
+Args:
+    username (string): the username of the player
+    slot1 (int): first pokemon slot
+    slot2 (int): second pokemon slot
+
+Returns:
+    A message indicating success, or debug data
+"""
+def swapParty(username: str, slot1: int, slot2: int):
+    data = player.loadSave(username)
+    playerParty = getParty(data)
+    if 0 <= slot1 <= 5 and 0 <= slot2 <= 5 and slot1 != slot2:
+        if playerParty[slot1]["name"] != "" and playerParty[slot1]["name"] != "":
+            message = f"Before:\n\n{viewParty(username)}\n\n"
+            tempSlot = playerParty[slot1]
+            playerParty[slot1] = playerParty[slot2]
+            playerParty[slot2] = tempSlot
+            player.saveData(username, data)
+            message += f"After:\n\n{viewParty(username)}"
+        else:
+            message = "Slots chosen must be filled"
+    else:
+        message = "Please choose valid slots 1 through 6 that are not equal to each other"
+    return message

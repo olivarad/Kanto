@@ -72,7 +72,15 @@ If the pplayer does not have a party, a message will be sent to them about creat
 async def viewParty(context):
     author = context.author
     username = author.name
-    message = party.showParty(username)
+    message = party.viewParty(username)
+    await author.send(message)
+
+@bot.command()
+async def swapParty(context, slot1, slot2):
+    author = context.author
+    username = author.name
+    slot1, slot2 = int(slot1) - 1, int(slot2) - 1
+    message = party.swapParty(username, slot1, slot2)
     await author.send(message)
 
 bot.run(BOT_TOKEN)
