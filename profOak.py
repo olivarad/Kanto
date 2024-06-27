@@ -5,9 +5,8 @@ import toml
 import pokemon
 import party
 import player
-
-BOT_TOKEN = "XXXXX"
-WELCOME_CHANNEL_ID = XXXXX
+from tokens import BOT_TOKEN
+from channels import WELCOME_CHANNEL_ID
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 

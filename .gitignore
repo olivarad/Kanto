@@ -1,0 +1,7 @@
+# Hidden Data
+tokens.py
+channels.py
+
+# Player Save Files
+players/*
+!players/template.toml
