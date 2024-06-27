@@ -54,15 +54,3 @@ def saveData(username: str, data: dict):
             toml.dump(data, file)
     except FileNotFoundError:
         print("saveData: FILE NOT FOUND")
-
-"""
-Obtain the party from the dict of a players toml save file
-
-Args:
-    data (dict): toml data representing the save
-
-Returns:
-    a players party
-"""
-def getParty(data: dict):
-    return data["pokemon"]

@@ -7,6 +7,7 @@ import party
 import player
 from tokens import BOT_TOKEN
 from channels import WELCOME_CHANNEL_ID
+import definitions
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
@@ -39,11 +40,7 @@ async def on_message(message):
 
 @bot.command()
 async def commands(context):
-    await context.send(f"Commands: \
-                        \n!commands: See commands \
-                        \n!ready: Begin your pokemon journey (can not be used more than once) \
-                        \n!starter: Indicate that you would like to choose your starter pokemon \
-                        \n!viewParty: View your party")
+    await context.send(definitions.commands)
 
 @bot.command()
 async def ready(context):
@@ -64,36 +61,8 @@ Args:
 @bot.command()
 async def starter(context, *, selection=None):
     author = context.author
-    username = author.name
-
-    if selection is None:
-        await author.send("The options are as follows \
-                        \nBulbasaur \
-                        \nCharmander \
-                        \nSquirtle \
-                        \nPikachu \
-                        \nWhen you are ready to select use the command again followed by your selection, ex. (!starter Pikachu)")
-    else:
-        data = player.loadSave(username)
-        if data is not None:
-            playerParty = player.getParty(data)
-            if playerParty[0]["name"] == "":
-                    selection = selection.upper()
-                    if selection in party.acceptableStarters:
-                        selection = selection.capitalize()
-                        starter = pokemon.Pokemon(selection, 5)
-                        party.addPartyMember(username, starter)
-                        await author.send(f"You have chosen {selection.lower()}!")
-                    else:
-                        match selection:
-                            case "MIKUCHU":
-                                await author.send("FUCK PIKACHU, GIVE ME MIKUCHU!")
-                            case _:
-                                await author.send("Invalid selection, please try again!")
-            else:
-                await author.send("You cannot choose a second starter!")
-        else:
-            await author.send("You must use !ready to create a save file before you can play!")
+    message = party.chooseStarter(author, selection=selection)
+    await author.send(message)
 
 """
 If the player has a party, a message will be sent to them containing each party member and their currentHP
@@ -103,26 +72,7 @@ If the pplayer does not have a party, a message will be sent to them about creat
 async def viewParty(context):
     author = context.author
     username = author.name
-
-    data = player.loadSave(username)
-
-    if data is not None:
-        message = ""
-        playerParty = player.getParty(data)
-        for i in range(6):
-            pokemon = playerParty[i]
-            if pokemon["name"] != "":
-                # Formatting
-                if i > 0:
-                    message += "\n"
-                    # Message contains the pokemon name and current HP
-                message += f"{pokemon["name"]} \nHP: {pokemon["currentHP"]}"
-        if message == "":
-            await author.send("Your party is empty!")
-        else:
-            await author.send(message)
-
-    else:
-        await author.send("You must use !ready to create a save file then choose your starter with !starter before you can play!")
+    message = party.showParty(username)
+    await author.send(message)
 
 bot.run(BOT_TOKEN)

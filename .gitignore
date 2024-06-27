@@ -5,3 +5,6 @@ channels.py
 # Player Save Files
 players/*
 !players/template.toml
+
+#pycache
+__pycache__/
