@@ -1,0 +1,27 @@
+name: checkForBotCommandDefinitions
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-for-bot-commmand-definitions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12.x"
+
+      - name: Check for bot command definitions
+        run: |
+          cd devops && python checkForBotCommandDefinitions.py
+          exit_code=$?
+          if [ $exit_code -eq 1 ]; then
+            exit 1
+          fi
