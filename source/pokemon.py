@@ -21,7 +21,7 @@ class Pokemon:
         name (string): the name of the pokedex entry
     """
     def getPokedexEntry(self, name: str):
-        with open("pokedex.json", "r") as file:
+        with open("../pokedex.json", "r") as file:
             data = json.load(file)
             self.pokedexEntry = data[name]
         

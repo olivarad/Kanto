@@ -1,1 +1,0 @@
-players_directory = "players/"

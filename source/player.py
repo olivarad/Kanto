@@ -1,4 +1,3 @@
-import discord
 import directories
 import helperFunctions
 import toml
@@ -7,19 +6,18 @@ import toml
 Check for a player save file and make one if it does not exist
 
 Args:
-    author: the author of a message
+    username: the username of a message author
 """
-async def checkForSave(author):
-    username = author.name
+def checkForSave(username):
     try:
         with open(f"{directories.players_directory}{username}.toml", 'r') as file:
-            await author.send("A save file for pokemon Kanto already exists!")
+            return "A save file for pokemon Kanto already exists!"
     except FileNotFoundError:
         with open(f"{directories.players_directory}template.toml", "r") as template:
             templateData = template.read()
             with open(f"{directories.players_directory}{username}.toml", "a") as savefile:
                 savefile.write(templateData) 
-                await author.send("A save file for pokemon Kanto has been created for you!")
+                return "A save file for pokemon Kanto has been created for you!"
 
 """
 Load a players save file

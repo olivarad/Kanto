@@ -1,8 +1,5 @@
 from discord.ext import commands, tasks
 import discord
-import directories
-import toml
-import pokemon
 import party
 import player
 from tokens import BOT_TOKEN
@@ -47,8 +44,10 @@ async def ready(context):
     channel = context.channel.id
     if channel == WELCOME_CHANNEL_ID:
         author = context.author
-        await player.checkForSave(author)
-        await author.send("Pokemon Kanto is played by sending me DMs, for help with commands, please type !commands!")
+        username = author.name
+        message = player.checkForSave(username)
+        await author.send(f"{message} \
+                          \nPokemon Kanto is played by sending me DMs, for help with commands, please type !commands!")
 
 
 """

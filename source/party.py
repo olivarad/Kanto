@@ -1,5 +1,3 @@
-import directories
-import toml
 import pokemon
 import player
 

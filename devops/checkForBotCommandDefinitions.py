@@ -46,8 +46,8 @@ def checkCommandDefinitionExistence(botFile, definitionsFile):
 
     return 0  # Return 0 if all command are found
 
-botFile = '../profOak.py'
-definitionsFile = '../definitions.py'
+botFile = '../source/profOak.py'
+definitionsFile = '../source/definitions.py'
 
 exit_code = checkCommandDefinitionExistence(botFile, definitionsFile)
 exit(exit_code)
