@@ -5,6 +5,8 @@ import player
 from tokens import BOT_TOKEN
 from channels import WELCOME_CHANNEL_ID
 import definitions
+import helperFunctions
+import asyncio
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
@@ -37,13 +39,18 @@ async def on_message(message):
 
 @bot.command()
 async def commands(context):
-    await context.send(definitions.commands)
+    author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
+    await author.send(definitions.commands)
 
 @bot.command()
 async def ready(context):
+    author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
     channel = context.channel.id
     if channel == WELCOME_CHANNEL_ID:
-        author = context.author
         username = author.name
         message = player.checkForSave(username)
         await author.send(f"{message} \
@@ -60,6 +67,8 @@ Args:
 @bot.command()
 async def starter(context, *, selection=None):
     author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
     message = party.chooseStarter(author, selection=selection)
     await author.send(message)
 
@@ -70,6 +79,8 @@ If the pplayer does not have a party, a message will be sent to them about creat
 @bot.command()
 async def showParty(context):
     author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
     username = author.name
     message = party.showParty(username)
     await author.send(message)
@@ -77,14 +88,46 @@ async def showParty(context):
 @bot.command()
 async def swapParty(context, slot1, slot2):
     author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
     username = author.name
     slot1, slot2 = int(slot1) - 1, int(slot2) - 1
     message = party.swapParty(username, slot1, slot2)
     await author.send(message)
 
 @bot.command()
+async def box(context):
+    author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
+    await author.send(definitions.boxOptions)
+
+    # Disable this users ability to send commands
+    helperFunctions.revokeCommandPriveledges(author)
+
+    response = await helperFunctions.getResponse(bot, author)
+    if response is not None:
+        responseContent = response.content.strip().lower()
+        if responseContent in definitions.boxOptionResponses:
+            action = definitions.boxOptionResponses[responseContent]
+            match action:
+                case "show box inventory":
+                    await author.send("You have selected \"show box inventory\"")
+                case "deposit a pokemon":
+                    await author.send("You have selected \"deposit a pokemon\"")
+                case "withdraw a pokemon":
+                    await author.send("You have selected \"withdraw a pokemon\"")
+        else:
+            await author.send("Invalid selection, cancelling transaction")
+    else: 
+        await author.send("Response timeout, cancelling transaction")
+    helperFunctions.grantCommandPrivledges(author)
+
+@bot.command()
 async def showBadges(context):
     author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
     username = author.name
     badges = player.showBadges(username)
     await author.send(badges)
@@ -92,6 +135,8 @@ async def showBadges(context):
 @bot.command()
 async def showInventory(context):
     author = context.author
+    if not helperFunctions.checkCommandPriveledges(author):
+        return
     username = author.name
     inventory = player.showInventory(username)
     await author.send(inventory)
