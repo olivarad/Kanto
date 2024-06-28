@@ -42,6 +42,30 @@ def loadSave(username: str):
         return None
 
 """
+Load a players badges to a dict
+If you do not need to modify the badges, you can simply obtain it by doing loadBadges(username)
+If you need to modify a players badges you will need to first get the savefile then the badges with loadBadges(None, data)
+
+Args:
+    username (string): the players username
+    data (dict): a players savefile
+
+Returns:
+    the badges of a player in toml dictionary format
+"""
+def loadBadges(username: str = None, data: dict = None):
+    if username is None:
+        if data is None:
+            return None
+        else:
+            return data["badges"]
+    else:
+        data = loadSave(username)
+        if data is None:
+            return None
+        else:
+            return data["badges"]
+"""
 Load a players inventory to a dict
 If you do not need to modify the inventory, you can simply obtain it by doing loadInventory(username)
 If you need to modify an inventory you will need to first get the savefile then the inventory with loadInventory(None, data)
@@ -80,6 +104,25 @@ def saveData(username: str, data: dict):
             toml.dump(data, file)
     except FileNotFoundError:
         print("saveData: FILE NOT FOUND")
+
+"""
+Helper function to give the bot a players earned badges
+
+Args:
+    username (string): The username of the player
+
+Returns:
+    a message indicating that no save file exists or contatining the users earned badges
+"""
+def showBadges(username: str):
+    badges = loadBadges(username)
+    if badges is None:
+        return "No Savefile Exists"
+    else:
+        if not badges:
+            return "You do not have any badges"
+        else:
+            return helperFunctions.parseList(badges)
 
 """
 Helper function to give the bot a players inventory

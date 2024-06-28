@@ -69,10 +69,10 @@ If the player has a party, a message will be sent to them containing each party 
 If the pplayer does not have a party, a message will be sent to them about creating a save file and selecting a starter
 """
 @bot.command()
-async def viewParty(context):
+async def showParty(context):
     author = context.author
     username = author.name
-    message = party.viewParty(username)
+    message = party.showParty(username)
     await author.send(message)
 
 @bot.command()
@@ -82,6 +82,13 @@ async def swapParty(context, slot1, slot2):
     slot1, slot2 = int(slot1) - 1, int(slot2) - 1
     message = party.swapParty(username, slot1, slot2)
     await author.send(message)
+
+@bot.command()
+async def showBadges(context):
+    author = context.author
+    username = author.name
+    badges = player.showBadges(username)
+    await author.send(badges)
 
 @bot.command()
 async def showInventory(context):

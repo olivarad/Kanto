@@ -104,7 +104,7 @@ Args:
 Returns:
     A message indicating that they either do not have a savefile, their party is empty, or showing the party
 """
-def viewParty(username: str):
+def showParty(username: str):
     playerParty = getParty(username)
     if playerParty is not None:
         message = ""
@@ -139,12 +139,12 @@ def swapParty(username: str, slot1: int, slot2: int):
     playerParty = getParty(None, data)
     if 0 <= slot1 <= 5 and 0 <= slot2 <= 5 and slot1 != slot2:
         if playerParty[slot1]["name"] != "" and playerParty[slot2]["name"] != "":
-            message = f"Before:\n\n{viewParty(username)}\n\n"
+            message = f"Before:\n\n{showParty(username)}\n\n"
             tempSlot = playerParty[slot1]
             playerParty[slot1] = playerParty[slot2]
             playerParty[slot2] = tempSlot
             player.saveData(username, data)
-            message += f"After:\n\n{viewParty(username)}"
+            message += f"After:\n\n{showParty(username)}"
         else:
             message = "Slots chosen must be filled"
     else:
