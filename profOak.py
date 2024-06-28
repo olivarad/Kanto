@@ -83,4 +83,11 @@ async def swapParty(context, slot1, slot2):
     message = party.swapParty(username, slot1, slot2)
     await author.send(message)
 
+@bot.command()
+async def showInventory(context):
+    author = context.author
+    username = author.name
+    inventory = player.showInventory(username)
+    await author.send(inventory)
+
 bot.run(BOT_TOKEN)

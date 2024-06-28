@@ -10,15 +10,28 @@ acceptableStarters = {
 
 """
 Obtain the party from the dict of a players toml save file
+If you do not need to modify the party, you can simply obtain it by doing getParty(username)
+If you need to modify a party you will need to first get the savefile then the party with getParty(None, data)
 
 Args:
+    username (string): the players username
     data (dict): toml data representing the save
 
 Returns:
     a players party
 """
-def getParty(data: dict):
-    return data["pokemon"]
+def getParty(username: str = None, data: dict = None):
+    if username is None:
+        if data is None:
+            return None
+        else:
+            return data["pokemon"]
+    else:
+        data = player.loadSave(username)
+        if data is None:
+            return None
+        else:
+            return data["pokemon"]
 
 """
 Add a pokemon to a players party
@@ -33,7 +46,7 @@ def addPartyMember(username: str, pokemon: pokemon.Pokemon):
     if data is not None:
         # Check for an open slot and fill it
         # TODO If no open slot is found add it to the pc
-        playerParty = getParty(data)
+        playerParty = getParty(None, data)
         for partySlot in playerParty:
             if partySlot.get("name", "") == "":
                 pokemon.loadPokemonTOML(partySlot)
@@ -62,7 +75,7 @@ def chooseStarter(author, *, selection=None):
         username = author.name
         data = player.loadSave(username)
         if data is not None:
-            playerParty = getParty(data)
+            playerParty = getParty(None, data)
             if playerParty[0]["name"] == "":
                     selection = selection.upper()
                     if selection in acceptableStarters:
@@ -92,9 +105,8 @@ Returns:
     A message indicating that they either do not have a savefile, their party is empty, or showing the party
 """
 def viewParty(username: str):
-    data = player.loadSave(username)
-    if data is not None:
-        playerParty = getParty(data)
+    playerParty = getParty(username)
+    if playerParty is not None:
         message = ""
         for i in range(6):
                 pokemon = playerParty[i]
@@ -124,9 +136,9 @@ Returns:
 """
 def swapParty(username: str, slot1: int, slot2: int):
     data = player.loadSave(username)
-    playerParty = getParty(data)
+    playerParty = getParty(None, data)
     if 0 <= slot1 <= 5 and 0 <= slot2 <= 5 and slot1 != slot2:
-        if playerParty[slot1]["name"] != "" and playerParty[slot1]["name"] != "":
+        if playerParty[slot1]["name"] != "" and playerParty[slot2]["name"] != "":
             message = f"Before:\n\n{viewParty(username)}\n\n"
             tempSlot = playerParty[slot1]
             playerParty[slot1] = playerParty[slot2]
