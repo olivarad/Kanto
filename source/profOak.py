@@ -33,24 +33,28 @@ async def on_message(message):
             command = content[1:].split()[0]  # Extract the command (without the prefix '!')
             args = content[len(command)+1:].strip()  # Extract arguments if any
             context = await bot.get_context(message)
+            author = context.author
+            # Only process commands for those with permission
+            if not helperFunctions.checkCommandPriveledges(author):
+                return
+            # revoke command permission before processing a command
+            helperFunctions.revokeCommandPriveledges(author)
             await bot.invoke(context)
+            # grant command priveledge after command has completed
+            helperFunctions.grantCommandPrivledges(author)
     else:
         await bot.process_commands(message)  # Ensure commands still work in server channels
 
 @bot.command()
 async def commands(context):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     await author.send(definitions.commands)
 
 @bot.command()
 async def ready(context):
-    author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     channel = context.channel.id
     if channel == WELCOME_CHANNEL_ID:
+        author = context.author
         username = author.name
         message = player.checkForSave(username)
         await author.send(f"{message} \
@@ -67,8 +71,6 @@ Args:
 @bot.command()
 async def starter(context, *, selection=None):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     message = party.chooseStarter(author, selection=selection)
     await author.send(message)
 
@@ -79,8 +81,6 @@ If the pplayer does not have a party, a message will be sent to them about creat
 @bot.command()
 async def showParty(context):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     username = author.name
     message = party.showParty(username)
     await author.send(message)
@@ -88,8 +88,6 @@ async def showParty(context):
 @bot.command()
 async def swapParty(context, slot1, slot2):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     username = author.name
     slot1, slot2 = int(slot1) - 1, int(slot2) - 1
     message = party.swapParty(username, slot1, slot2)
@@ -98,12 +96,7 @@ async def swapParty(context, slot1, slot2):
 @bot.command()
 async def box(context):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     await author.send(definitions.boxOptions)
-
-    # Disable this users ability to send commands
-    helperFunctions.revokeCommandPriveledges(author)
 
     response = await helperFunctions.getResponse(bot, author)
     if response is not None:
@@ -121,13 +114,10 @@ async def box(context):
             await author.send("Invalid selection, cancelling transaction")
     else: 
         await author.send("Response timeout, cancelling transaction")
-    helperFunctions.grantCommandPrivledges(author)
 
 @bot.command()
 async def showBadges(context):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     username = author.name
     badges = player.showBadges(username)
     await author.send(badges)
@@ -135,8 +125,6 @@ async def showBadges(context):
 @bot.command()
 async def showInventory(context):
     author = context.author
-    if not helperFunctions.checkCommandPriveledges(author):
-        return
     username = author.name
     inventory = player.showInventory(username)
     await author.send(inventory)
