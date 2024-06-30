@@ -96,6 +96,7 @@ async def swapParty(context, slot1, slot2):
 @bot.command()
 async def box(context):
     author = context.author
+    username = author.name
     await author.send(definitions.boxOptions)
 
     response = await helperFunctions.getResponse(bot, author)
@@ -105,7 +106,8 @@ async def box(context):
             action = definitions.boxOptionResponses[responseContent]
             match action:
                 case "show box inventory":
-                    await author.send("You have selected \"show box inventory\"")
+                    inventory = party.showBox(username)
+                    await author.send(inventory)
                 case "deposit a pokemon":
                     await author.send("You have selected \"deposit a pokemon\"")
                 case "withdraw a pokemon":

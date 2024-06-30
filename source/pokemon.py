@@ -116,7 +116,7 @@ class Pokemon:
     The data is loaded but not saved
 
     Args:
-        slot (A dict from a toml file contiaining the slot (PC or Party) for the pokemon)
+        slot (A dict from a toml file contiaining the slot (box or Party) for the pokemon)
     """
     def loadPokemonTOML(self, slot):
         slot["name"] = self.name
@@ -141,3 +141,16 @@ class Pokemon:
         slot["Sp. Attack"] = self.specialAttackStat
         slot["Sp. Defense"] = self.specialDefenseStat
         slot["Speed"] = self.speedStat
+
+"""
+Helper function to create a message to show pokemon data to a player
+Assumes that the slot is populated
+
+Args:
+    slot (A dict from a toml file contiaining the slot (box or Party) for the pokemon)
+
+Returns:
+    A message with slot data
+"""
+def showPokemon(slot: dict):
+    return f"Name: {slot["name"]}\nLevel: {slot["level"]}\nCurrent HP: {slot["currentHP"]}"

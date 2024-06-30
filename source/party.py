@@ -17,6 +17,7 @@ Args:
 
 Returns:
     a players party
+    None: no savefile exists or all parameter were empty
 """
 def getParty(username: str = None, data: dict = None):
     if username is None:
@@ -30,6 +31,41 @@ def getParty(username: str = None, data: dict = None):
             return None
         else:
             return data["pokemon"]
+        
+"""
+Obtain the box from the dict of a players toml save file
+If you do not need to modify the box, you can simply obtain it by doing getBox(username)
+If you need to modify a box you will need to first get the savefile then the box with getBox(None, data)
+
+Args:
+    username (string): the players username
+    data (dict): toml data representing the save
+
+Returns:
+    a players box
+    None: no savefile exists or all parameter were empty
+    KeyError: a savefile exists but no box exists in the savefile
+"""
+def getBox(username: str = None, data: dict = None):
+    if username is None:
+        if data is None:
+            return None
+        else:
+            try:
+                playerBox = data["box"]
+                return data["box"]
+            except KeyError:
+                raise KeyError
+    else:
+        data = player.loadSave(username)
+        if data is None:
+            return None
+        else:
+            try:
+                playerBox = data["box"]
+                return data["box"]
+            except KeyError:
+                raise KeyError
 
 """
 Add a pokemon to a players party
@@ -107,13 +143,13 @@ def showParty(username: str):
     if playerParty is not None:
         message = ""
         for i in range(6):
-                pokemon = playerParty[i]
-                if pokemon["name"] != "":
+                player_pokemon = playerParty[i]
+                if player_pokemon["name"] != "":
                     # Formatting
                     if i > 0:
                         message += "\n"
                         # Message contains the pokemon name and current HP
-                    message += f"{pokemon["name"]} \nHP: {pokemon["currentHP"]}"
+                    message += f"{pokemon.showPokemon(player_pokemon)}\n"
         if message == "":
             return "Your party is empty!"
         else:
@@ -121,6 +157,28 @@ def showParty(username: str):
     else:
         return "You must use !ready to create a save file then choose your starter with !starter before you can play!"
     
+"""
+Show a players box in a string
+
+Args:
+    username (string): The username of the player
+
+Returns:
+    A message indicating that they either do not have a savefile, their box is empty, or showing the box
+"""
+def showBox(username: str):
+    try:
+        playerBox = getBox(username)
+        message = ""
+        for i in range(len(playerBox)):
+            if i != 0:
+                message+=f"\n{pokemon.showPokemon(playerBox[i])}\n"
+            else:
+                message+=f"{pokemon.showPokemon(playerBox[i])}\n"
+        return message
+    except KeyError:
+        return "You have no pokemon deposited in your box"
+
 """
 Swap two members in a players party
 
