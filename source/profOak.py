@@ -96,26 +96,8 @@ async def swapParty(context, slot1, slot2):
 @bot.command()
 async def box(context):
     author = context.author
-    username = author.name
-    await author.send(definitions.boxOptions)
-
-    response = await helperFunctions.getResponse(bot, author)
-    if response is not None:
-        responseContent = response.content.strip().lower()
-        if responseContent in definitions.boxOptionResponses:
-            action = definitions.boxOptionResponses[responseContent]
-            match action:
-                case "show box inventory":
-                    inventory = party.showBox(username)
-                    await author.send(inventory)
-                case "deposit a pokemon":
-                    await author.send("You have selected \"deposit a pokemon\"")
-                case "withdraw a pokemon":
-                    await author.send("You have selected \"withdraw a pokemon\"")
-        else:
-            await author.send("Invalid selection, cancelling transaction")
-    else: 
-        await author.send("Response timeout, cancelling transaction")
+    await party.box(bot, author)
+    
 
 @bot.command()
 async def showBadges(context):

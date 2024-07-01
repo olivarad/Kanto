@@ -22,3 +22,32 @@ boxOptionResponses = {
 
 # Dictionary to store who cannot run commands
 userCommandPriveledges = {}
+
+# Used for emptying a pokemon slot
+emptyPokemonSlot = {
+    "name": "",
+    "nickname": "",
+    "primary": "",
+    "secondary": "",
+    "level": 0,
+    "moves": [],
+    "HealthIV": 0,
+    "AttackIV": 0,
+    "DefenseIV": 0,
+    "SpecialIV": 0,
+    "SpeedIV": 0,
+    "HealthEV": 0,
+    "AttackEV": 0,
+    "DefenseEV": 0,
+    "SpecialEV": 0,
+    "SpeedEV": 0,
+    "maxHP": 0,
+    "currentHP": 0,
+    "Attack": 0,
+    "Defense": 0,
+    "Sp. Attack": 0,
+    "Sp. Defense": 0,
+    "Speed": 0
+}
+
+noSavefileMessage = "You do not have a savefile, to create one and begin playing send !ready in the welcome channel"

@@ -1,5 +1,8 @@
 import pokemon
 import player
+import helperFunctions
+import party
+import definitions
 
 # Acceptable Starters
 acceptableStarters = {
@@ -134,29 +137,112 @@ Show a players party in a string
 
 Args:
     username (string): The username of the player
+    showSlotNumbers (bool): Indication of if the message should include slot numbers
 
 Returns:
     A message indicating that they either do not have a savefile, their party is empty, or showing the party
 """
-def showParty(username: str):
-    playerParty = getParty(username)
-    if playerParty is not None:
-        message = ""
-        for i in range(6):
-                player_pokemon = playerParty[i]
-                if player_pokemon["name"] != "":
-                    # Formatting
-                    if i > 0:
-                        message += "\n"
-                        # Message contains the pokemon name and current HP
-                    message += f"{pokemon.showPokemon(player_pokemon)}\n"
-        if message == "":
-            return "Your party is empty!"
+def showParty(username: str = None, playerParty: dict = None, showSlotNumbers: bool = False):
+    if username is not None:
+        playerParty = getParty(username)
+        if playerParty is not None:
+            message = ""
+            for i in range(6):
+                    player_pokemon = playerParty[i]
+                    if player_pokemon["name"] != "":
+                        # Formatting
+                        if i != 0:
+                            message += "\n"
+                        if showSlotNumbers is True:
+                            message += f"{i + 1}:\n"
+                        message += f"{pokemon.showPokemon(player_pokemon)}\n"
+            if message == "":
+                return "Your party is empty!"
+            else:
+                return message
         else:
-            return message
+            return "You must use !ready to create a save file then choose your starter with !starter before you can play!"
     else:
-        return "You must use !ready to create a save file then choose your starter with !starter before you can play!"
+        # party provided
+        if playerParty is not None:
+            message = ""
+            for i in range(6):
+                    player_pokemon = playerParty[i]
+                    if player_pokemon["name"] != "":
+                        # Formatting
+                        if i != 0:
+                            message += "\n"
+                        if showSlotNumbers is True:
+                            message += f"{i + 1}:\n"
+                        message += f"{pokemon.showPokemon(player_pokemon)}\n"
+            if message == "":
+                return "Your party is empty!"
+            else:
+                return message
     
+"""
+Helper function for the box command
+
+Args:
+    author: author of a discord command
+"""
+async def box(bot, author):
+    await author.send(definitions.boxOptions)
+    boxOption = await helperFunctions.getResponse(bot, author)
+    if boxOption is not None:
+        optionContent = boxOption.content.strip().lower()
+        if optionContent in definitions.boxOptionResponses:
+            username = author.name
+            action = definitions.boxOptionResponses[optionContent]
+            match action:
+                case "show box inventory":
+                    inventory = party.showBox(username)
+                    await author.send(inventory)
+                case "deposit a pokemon":
+                    data = player.loadSave(username)
+                    playerParty = getParty(None, data)
+                    if playerParty is not None:
+                        # party is large enough to deposit a pokemon
+                        if playerParty[1]["name"] != "":
+                            partyString = showParty(None, playerParty, True)
+                            await author.send(f"Which pokemon would you like to deposit?\n{partyString}")
+                            response = await helperFunctions.getResponse(bot, author)
+                            if response is not None:
+                                try:
+                                    response = int(response.content.strip())
+                                    if 1 <= response <= 6:
+                                        response -= 1
+                                        if playerParty[response]["name"] != "":
+                                            try:
+                                                box = getBox(None, data)
+                                                box.append(playerParty[response])
+                                            except KeyError:
+                                                data["box"] = []
+                                                data["box"].append(playerParty[response])
+                                            for i in range(response, 5):
+                                                playerParty[i] = playerParty[i + 1]
+                                            playerParty[5] = definitions.emptyPokemonSlot
+                                            player.saveData(username, data)
+                                            await author.send(f"You have deposited {playerParty[response]["name"]}")
+                                        else:
+                                            await author.send("Please choose an occupied slot")
+                                    else:
+                                        await author.send("Please enter a valid number for your option")
+                                except ValueError:
+                                    await author.send("Please enter a valid number for your option")
+                            else:
+                                await author.send("Response timeout, cancelling transaction")
+                        else:
+                            await author.send("You must have more than one pokemon in your party to make a deposit")
+                    else:
+                        await author.send(definitions.noSavefileMessage)
+                case "withdraw a pokemon":
+                    await author.send("You have selected \"withdraw a pokemon\"")
+        else:
+            await author.send("Invalid selection, cancelling transaction")
+    else: 
+        await author.send("Response timeout, cancelling transaction")
+
 """
 Show a players box in a string
 
