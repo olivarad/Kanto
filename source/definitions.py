@@ -51,3 +51,7 @@ emptyPokemonSlot = {
 }
 
 noSavefileMessage = "You do not have a savefile, to create one and begin playing send !ready in the welcome channel"
+
+emptyBoxMessage = "Your box is empty"
+
+timeoutMessage = "Response timeout, cancelling transaction"

@@ -237,7 +237,43 @@ async def box(bot, author):
                     else:
                         await author.send(definitions.noSavefileMessage)
                 case "withdraw a pokemon":
-                    await author.send("You have selected \"withdraw a pokemon\"")
+                    data = player.loadSave(username)
+                    playerParty = getParty(None, data)
+                    if playerParty is not None:
+                        if playerParty[5]["name"] == "":
+                            try:
+                                playerBox = getBox(None, data)
+                                boxSize = len(playerBox)
+                                await author.send(f"Which box pokemon would you like to withdraw?\n\n{showBox(None, playerBox, True)}")
+                                response = await helperFunctions.getResponse(bot, author)
+                                if response is not None:
+                                    try:
+                                        response = int(response.content.strip())
+                                        response -= 1
+                                        if 0 <= response < boxSize:
+                                            for i in range(len(playerParty)):
+                                                if playerParty[i]["name"] == "":
+                                                    playerParty[i] = playerBox[response]
+                                                    await author.send(f"You have withdrawn {playerBox[response]["name"]}")
+                                                    if len(playerBox) == 1:
+                                                        del data["box"]
+                                                    else:
+                                                        del playerBox[response]
+                                                    player.saveData(username, data)
+                                                    break
+                                        else:
+                                            await author.send("Please enter a valid number for your option")
+                                    except ValueError:
+                                        await author.send("Please enter a valid number for your option")
+                                else:
+                                    await author.send(definitions.timeoutMessage)
+                            except KeyError:
+                                await author.send(definitions.noSavefileMessage)
+                        else:
+                            await author.send("You cannot withdraw a pokemon with a full party")
+                    else:
+                        await author.send(definitions.noSavefileMessage)
+                    
         else:
             await author.send("Invalid selection, cancelling transaction")
     else: 
@@ -248,23 +284,39 @@ Show a players box in a string
 
 Args:
     username (string): The username of the player
+    playerBox (dict): The player box if it is already accessed
+    showSlotNumbers (bool): Indication of if the message should include slot numbers
 
 Returns:
     A message indicating that they either do not have a savefile, their box is empty, or showing the box
 """
-def showBox(username: str):
-    try:
-        playerBox = getBox(username)
-        message = ""
-        for i in range(len(playerBox)):
-            if i != 0:
-                message+=f"\n{pokemon.showPokemon(playerBox[i])}\n"
+def showBox(username: str = None, playerBox: dict = None, showSlotNumbers: bool = False):
+    message = ""
+    if username is not None:
+        try:
+            playerBox = getBox(username, None)
+            for i in range(len(playerBox)):
+                boxPokemon = playerBox[i]
+                if showSlotNumbers:
+                    message += f"{i + 1}:\n"
+                message += f"{pokemon.showPokemon(boxPokemon)}\n"
+            if message == "":
+                return definitions.emptyBoxMessage
             else:
-                message+=f"{pokemon.showPokemon(playerBox[i])}\n"
-        return message
-    except KeyError:
-        return "You have no pokemon deposited in your box"
-
+                return message
+        except KeyError:
+            return definitions.emptyBoxMessage
+    else:
+        if playerBox is not None:
+            for i in range(len(playerBox)):
+                boxPokemon = playerBox[i]
+                if showSlotNumbers:
+                    message += f"{i + 1}:\n"
+                message += f"{pokemon.showPokemon(boxPokemon)}\n"
+            if message == "":
+                return definitions.emptyBoxMessage
+            else:
+                return message
 """
 Swap two members in a players party
 
