@@ -4,11 +4,6 @@ import helperFunctions
 import party
 import definitions
 
-# Acceptable Starters
-acceptableStarters = {
-    "BULBASAUR", "CHARMANDER", "SQUIRTLE", "PIKACHU"
-}
-
 """
 Obtain the party from the dict of a players toml save file
 If you do not need to modify the party, you can simply obtain it by doing getParty(username)
@@ -102,7 +97,7 @@ Returns:
 """
 def chooseStarter(author, *, selection=None):
     if selection is None:
-        message = "The options are as follows \
+        return "The options are as follows \
                         \nBulbasaur \
                         \nCharmander \
                         \nSquirtle \
@@ -115,22 +110,21 @@ def chooseStarter(author, *, selection=None):
             playerParty = getParty(None, data)
             if playerParty[0]["name"] == "":
                     selection = selection.upper()
-                    if selection in acceptableStarters:
+                    if selection in definitions.acceptableStarters:
                         selection = selection.capitalize()
                         starter = pokemon.Pokemon(selection, 5)
                         addPartyMember(username, starter)
-                        message = f"You have chosen {selection.lower()}!"
+                        return f"You have chosen {selection.lower()}!"
                     else:
                         match selection:
                             case "MIKUCHU":
-                                message = "FUCK PIKACHU, GIVE ME MIKUCHU!"
+                                return "FUCK PIKACHU, GIVE ME MIKUCHU!"
                             case _:
-                                message = "Invalid selection, please try again!"
+                                return "Invalid selection, please try again!"
             else:
-                message = "You cannot choose a second starter!"
+                return "You cannot choose a second starter!"
         else:
-            message = "You must use !ready to create a save file before you can play!"
-    return message
+            return "You must use !ready to create a save file before you can play!"
 
 """
 Show a players party in a string
@@ -157,7 +151,7 @@ def showParty(username: str = None, playerParty: dict = None, showSlotNumbers: b
                             message += f"{i + 1}:\n"
                         message += f"{pokemon.showPokemon(player_pokemon)}\n"
             if message == "":
-                return "Your party is empty!"
+                return definitions.emptyPartyMessage
             else:
                 return message
         else:
@@ -176,7 +170,7 @@ def showParty(username: str = None, playerParty: dict = None, showSlotNumbers: b
                             message += f"{i + 1}:\n"
                         message += f"{pokemon.showPokemon(player_pokemon)}\n"
             if message == "":
-                return "Your party is empty!"
+                return definitions.emptyPartyMessage
             else:
                 return message
     
@@ -205,7 +199,7 @@ async def box(bot, author):
                         # party is large enough to deposit a pokemon
                         if playerParty[1]["name"] != "":
                             partyString = showParty(None, playerParty, True)
-                            await author.send(f"Which pokemon would you like to deposit?\n{partyString}")
+                            await author.send(f"{definitions.boxDepositPromptMessage}{partyString}")
                             response = await helperFunctions.getResponse(bot, author)
                             if response is not None:
                                 try:
@@ -213,6 +207,7 @@ async def box(bot, author):
                                     if 1 <= response <= 6:
                                         response -= 1
                                         if playerParty[response]["name"] != "":
+                                            name = playerParty[response]["name"]
                                             try:
                                                 box = getBox(None, data)
                                                 box.append(playerParty[response])
@@ -223,17 +218,17 @@ async def box(bot, author):
                                                 playerParty[i] = playerParty[i + 1]
                                             playerParty[5] = definitions.emptyPokemonSlot
                                             player.saveData(username, data)
-                                            await author.send(f"You have deposited {playerParty[response]["name"]}")
+                                            await author.send(f"{definitions.boxDepositConfirmationMessage}{name}")
                                         else:
-                                            await author.send("Please choose an occupied slot")
+                                            await author.send(definitions.nonFilledSlotBoxMessage)
                                     else:
-                                        await author.send("Please enter a valid number for your option")
+                                        await author.send(definitions.chooseValidNumberMessage)
                                 except ValueError:
-                                    await author.send("Please enter a valid number for your option")
+                                    await author.send(definitions.chooseValidNumberMessage)
                             else:
-                                await author.send("Response timeout, cancelling transaction")
+                                await author.send(definitions.timeoutMessage)
                         else:
-                            await author.send("You must have more than one pokemon in your party to make a deposit")
+                            await author.send(definitions.boxDepositInsufficientPartySizeMessage)
                     else:
                         await author.send(definitions.noSavefileMessage)
                 case "withdraw a pokemon":
@@ -244,7 +239,7 @@ async def box(bot, author):
                             try:
                                 playerBox = getBox(None, data)
                                 boxSize = len(playerBox)
-                                await author.send(f"Which box pokemon would you like to withdraw?\n\n{showBox(None, playerBox, True)}")
+                                await author.send(f"{definitions.boxWithdrawPromptMessage}{showBox(None, playerBox, True)}")
                                 response = await helperFunctions.getResponse(bot, author)
                                 if response is not None:
                                     try:
@@ -254,7 +249,7 @@ async def box(bot, author):
                                             for i in range(len(playerParty)):
                                                 if playerParty[i]["name"] == "":
                                                     playerParty[i] = playerBox[response]
-                                                    await author.send(f"You have withdrawn {playerBox[response]["name"]}")
+                                                    await author.send(f"{definitions.boxWithdrawConfirmationMessage}{playerBox[response]["name"]}")
                                                     if len(playerBox) == 1:
                                                         del data["box"]
                                                     else:
@@ -262,22 +257,22 @@ async def box(bot, author):
                                                     player.saveData(username, data)
                                                     break
                                         else:
-                                            await author.send("Please enter a valid number for your option")
+                                            await author.send(definitions.chooseValidNumberMessage)
                                     except ValueError:
-                                        await author.send("Please enter a valid number for your option")
+                                        await author.send(definitions.chooseValidNumberMessage)
                                 else:
                                     await author.send(definitions.timeoutMessage)
                             except KeyError:
                                 await author.send(definitions.noSavefileMessage)
                         else:
-                            await author.send("You cannot withdraw a pokemon with a full party")
+                            await author.send(definitions.boxWithdrawInvalidPartySizeMessage)
                     else:
                         await author.send(definitions.noSavefileMessage)
                     
         else:
-            await author.send("Invalid selection, cancelling transaction")
+            await author.send(definitions.invalidSelectionMessage)
     else: 
-        await author.send("Response timeout, cancelling transaction")
+        await author.send(definitions.timeoutMessage)
 
 """
 Show a players box in a string
@@ -340,7 +335,7 @@ def swapParty(username: str, slot1: int, slot2: int):
             player.saveData(username, data)
             message += f"After:\n\n{showParty(username)}"
         else:
-            message = "Slots chosen must be filled"
+            return definitions.filledSlotsRequiredMessage
     else:
-        message = "Please choose valid slots 1 through 6 that are not equal to each other"
+        return definitions.swapPartyInvalidSlotsMessage
     return message

@@ -1,3 +1,72 @@
+import player
+
+botReadyMessage = "Pokebot ready!"
+
+saveFileExistsMessage = "A save file for pokemon Kanto already exists!"
+
+saveFileCreatedMessage = "A save file for pokemon Kanto has been created for you!"
+
+noSavefileMessage = "You do not have a savefile, to create one and begin playing send !ready in the welcome channel!"
+
+chooseValidNumberMessage = "Please enter a valid number for your option!"
+
+invalidSelectionMessage = "Invalid selection, cancelling transaction!"
+
+filledSlotsRequiredMessage = "Slots chosen must be filled!"
+
+swapPartyInvalidSlotsMessage = "Please choose valid slots 1 through 6 that are not equal to each other!"
+
+emptyPartyMessage = "Your party is empty!"
+
+emptyBoxMessage = "Your box is empty!"
+
+boxDepositPromptMessage = "Which pokemon would you like to deposit?\n"
+
+boxDepositConfirmationMessage = "You have deposited "
+
+boxDepositInsufficientPartySizeMessage = "You must have more than one pokemon in your party to make a deposit!"
+
+boxWithdrawPromptMessage = "Which box pokemon would you like to withdraw?\n\n"
+
+boxWithdrawConfirmationMessage = "You have withdrawn "
+
+boxWithdrawInvalidPartySizeMessage = "You cannot withdraw a pokemon with a full party!"
+
+nonFilledSlotBoxMessage = "Please choose an occupied slot!"
+
+timeoutMessage = "Response timeout, cancelling transaction!"
+
+noBadgeMessage = "You do not have any badges!"
+
+"""
+Generates a message for new players that have joined the Kanto guild
+
+Args:
+    member: the discord member data variable
+
+Returns:
+    a message specific to that player welcoming them or indicating that they have already joined
+"""
+def joinMessage(member):
+    return f"Welcome {member.name} to Kanto, type !ready when you would like your pokemon journey to begin!"
+
+"""
+Generates a message for when players indicate they are ready in the Welcome channel
+
+Args:
+    username (str): the username of the player
+
+Returns:
+    A personalized message for players who indicated that they are ready
+"""
+def playerReadyMessage(username: str):
+    message = player.checkForSave(username)
+    return f"{message} \
+                          \nPokemon Kanto is played by sending me DMs, for help with commands, please type !commands!"
+
+# Dictionary to store who cannot run commands
+userCommandPriveledges = {}
+
 commands = f"Commands: \
                         \n!commands: See commands \
                         \n!ready: Begin your pokemon journey (can not be used more than once) \
@@ -8,20 +77,11 @@ commands = f"Commands: \
                         \n!showBadges: Display your badges \
                         \n!showInventory: Display your inventory"
 
-boxOptions = f"Please select an option: \
-                      \n1: Show box inventory \
-                      \n2: Deposit a pokemon \
-                      \n3: Withdraw a pokemon"
-
-boxOptionResponses = {
-    "1": "show box inventory",
-    "2": "deposit a pokemon",
-    "3": "withdraw a pokemon"
-
+# Acceptable Starters
+acceptableStarters = {
+    "BULBASAUR", "CHARMANDER", "SQUIRTLE", "PIKACHU"
 }
 
-# Dictionary to store who cannot run commands
-userCommandPriveledges = {}
 
 # Used for emptying a pokemon slot
 emptyPokemonSlot = {
@@ -50,8 +110,14 @@ emptyPokemonSlot = {
     "Speed": 0
 }
 
-noSavefileMessage = "You do not have a savefile, to create one and begin playing send !ready in the welcome channel"
+boxOptions = f"Please select an option: \
+                      \n1: Show box inventory \
+                      \n2: Deposit a pokemon \
+                      \n3: Withdraw a pokemon"
 
-emptyBoxMessage = "Your box is empty"
+boxOptionResponses = {
+    "1": "show box inventory",
+    "2": "deposit a pokemon",
+    "3": "withdraw a pokemon"
 
-timeoutMessage = "Response timeout, cancelling transaction"
+}

@@ -6,19 +6,19 @@ from tokens import BOT_TOKEN
 from channels import WELCOME_CHANNEL_ID
 import definitions
 import helperFunctions
-import asyncio
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 @bot.event
 async def on_ready():
-    print("Pokebot ready")
+    print(definitions.botReadyMessage)
 
 
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(WELCOME_CHANNEL_ID)
-    await channel.send(f"Welcome {member.name} to Kanto, type !ready when you would like your pokemon journey to begin!")
+    await channel.send(definitions.joinMessage(member))
+
 
 # Direct message processing
 @bot.event
@@ -30,8 +30,6 @@ async def on_message(message):
         content = message.content
         if content.startswith("!"):
             # Process as a command
-            command = content[1:].split()[0]  # Extract the command (without the prefix '!')
-            args = content[len(command)+1:].strip()  # Extract arguments if any
             context = await bot.get_context(message)
             author = context.author
             # Only process commands for those with permission
@@ -56,9 +54,7 @@ async def ready(context):
     if channel == WELCOME_CHANNEL_ID:
         author = context.author
         username = author.name
-        message = player.checkForSave(username)
-        await author.send(f"{message} \
-                          \nPokemon Kanto is played by sending me DMs, for help with commands, please type !commands!")
+        await author.send(definitions.joinMessage(username))
 
 
 """
@@ -71,8 +67,7 @@ Args:
 @bot.command()
 async def starter(context, *, selection=None):
     author = context.author
-    message = party.chooseStarter(author, selection=selection)
-    await author.send(message)
+    await author.send(party.chooseStarter(author, selection=selection))
 
 """
 If the player has a party, a message will be sent to them containing each party member and their currentHP
@@ -82,16 +77,14 @@ If the pplayer does not have a party, a message will be sent to them about creat
 async def showParty(context):
     author = context.author
     username = author.name
-    message = party.showParty(username)
-    await author.send(message)
+    await author.send(party.showParty(username))
 
 @bot.command()
 async def swapParty(context, slot1, slot2):
     author = context.author
     username = author.name
     slot1, slot2 = int(slot1) - 1, int(slot2) - 1
-    message = party.swapParty(username, slot1, slot2)
-    await author.send(message)
+    await author.send(party.swapParty(username, slot1, slot2))
 
 @bot.command()
 async def box(context):
@@ -103,14 +96,12 @@ async def box(context):
 async def showBadges(context):
     author = context.author
     username = author.name
-    badges = player.showBadges(username)
-    await author.send(badges)
+    await author.send(player.showBadges(username))
 
 @bot.command()
 async def showInventory(context):
     author = context.author
     username = author.name
-    inventory = player.showInventory(username)
-    await author.send(inventory)
+    await author.send(player.showInventory(username))
 
 bot.run(BOT_TOKEN)

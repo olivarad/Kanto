@@ -1,5 +1,6 @@
 import directories
 import helperFunctions
+import definitions
 import toml
 
 """
@@ -11,14 +12,13 @@ Args:
 def checkForSave(username):
     try:
         with open(f"{directories.players_directory}{username}.toml", 'r') as file:
-            return "A save file for pokemon Kanto already exists!"
+            return definitions.saveFileExistsMessage
     except FileNotFoundError:
         with open(f"{directories.players_directory}template.toml", "r") as template:
             templateData = template.read()
             with open(f"{directories.players_directory}{username}.toml", "a") as savefile:
                 savefile.write(templateData) 
-                return "A save file for pokemon Kanto has been created for you!"
-
+                return definitions.saveFileCreatedMessage
 """
 Load a players save file
 
@@ -115,10 +115,10 @@ Returns:
 def showBadges(username: str):
     badges = loadBadges(username)
     if badges is None:
-        return "No Savefile Exists"
+        return definitions.noSavefileMessage
     else:
         if not badges:
-            return "You do not have any badges"
+            return definitions.noBadgeMessage
         else:
             return helperFunctions.parseList(badges)
 
@@ -134,6 +134,6 @@ Returns:
 def showInventory(username: str):
     inventory = loadInventory(username)
     if inventory is None:
-        return "No Savefile Exists"
+        return definitions.noSavefileMessage
     else:
         return helperFunctions.parseDict(inventory)

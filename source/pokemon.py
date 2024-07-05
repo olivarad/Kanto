@@ -1,4 +1,5 @@
 import json
+import directories
 from random import randint
 from math import sqrt, floor, ceil
 
@@ -21,7 +22,7 @@ class Pokemon:
         name (string): the name of the pokedex entry
     """
     def getPokedexEntry(self, name: str):
-        with open("../pokedex.json", "r") as file:
+        with open(directories.pokedexFile, "r") as file:
             data = json.load(file)
             self.pokedexEntry = data[name]
         
