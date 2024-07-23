@@ -57,6 +57,11 @@ async def ready(context):
         await author.send(definitions.joinMessage(username))
 
 
+@bot.command(name="party")
+async def party_command(context):
+    author = context.author
+    await party.party(bot, author)
+
 """
 If no selection is given, the bot will display starter choices
 If a selection is given, the bot will add that to the players first party slot, provided they have not already recieved a starter and that it is a valid starter choice

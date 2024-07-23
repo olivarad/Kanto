@@ -1,5 +1,11 @@
 import player
 
+acceptableStarterMessage = "Please choose from these accepted starters: \
+    \n1: Bulbasaur \
+    \n2: Charmander \
+    \n3: Squirtle \
+    \n4: Pikachu"
+
 botReadyMessage = "Pokebot ready!"
 
 saveFileExistsMessage = "A save file for pokemon Kanto already exists!"
@@ -16,9 +22,23 @@ filledSlotsRequiredMessage = "Slots chosen must be filled!"
 
 swapPartyInvalidSlotsMessage = "Please choose valid slots 1 through 6 that are not equal to each other!"
 
-emptyPartyMessage = "Your party is empty!"
+emptyPartyMessage = f"Your party is empty, please select a starter from the below options:\n"
 
 emptyBoxMessage = "Your box is empty!"
+
+partyOptionsWithStarter = "Please select an option: \
+                      \n1: Choose a starter \
+                      \n2: Show party \
+                      \n3: Swap party order"
+
+partyOptionsWithoutStarter = "Please select an option: \
+                      \n1: Show party \
+                      \n2: Swap party order"
+
+boxOptions = "Please select an option: \
+                      \n1: Show box inventory \
+                      \n2: Deposit a pokemon \
+                      \n3: Withdraw a pokemon"
 
 boxDepositPromptMessage = "Which pokemon would you like to deposit?\n"
 
@@ -37,6 +57,13 @@ nonFilledSlotBoxMessage = "Please choose an occupied slot!"
 timeoutMessage = "Response timeout, cancelling transaction!"
 
 noBadgeMessage = "You do not have any badges!"
+
+starterOptionsMessage = "Please select a starter \
+                        \n1: Bulbasaur \
+                        \n2: Charmander \
+                        \n3: Squirtle \
+                        \n4: Pikachu \
+                        \nWhen you are ready to select use the command again followed by your selection, ex. (!starter Pikachu)"
 
 """
 Generates a message for new players that have joined the Kanto guild
@@ -79,7 +106,10 @@ commands = f"Commands: \
 
 # Acceptable Starters
 acceptableStarters = {
-    "BULBASAUR", "CHARMANDER", "SQUIRTLE", "PIKACHU"
+    "1": "BULBASAUR", 
+    "2": "CHARMANDER", 
+    "3": "SQUIRTLE", 
+    "4": "PIKACHU"
 }
 
 
@@ -110,14 +140,8 @@ emptyPokemonSlot = {
     "Speed": 0
 }
 
-boxOptions = f"Please select an option: \
-                      \n1: Show box inventory \
-                      \n2: Deposit a pokemon \
-                      \n3: Withdraw a pokemon"
-
 boxOptionResponses = {
     "1": "show box inventory",
     "2": "deposit a pokemon",
     "3": "withdraw a pokemon"
-
 }

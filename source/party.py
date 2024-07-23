@@ -89,6 +89,23 @@ def addPartyMember(username: str, pokemon: pokemon.Pokemon):
 Helper function for the bot command !starter
 
 Args:
+    bot: discord bot
+    author: the author of a message
+"""
+async def starter(bot, author):
+    await author.send(definitions.starterOptionsMessage)
+    starterOption = await helperFunctions.getResponse(bot, author)
+    if starterOption is not None:
+        optionContent = starterOption.content.strip().upper()
+        if optionContent in definitions.boxOptionResponses:
+            username = author.name
+            "TODO: FINISH DUE TO EEPY, FOLLOW BOX FUNCTION"
+            pass
+
+"""
+Helper function for the bot command !starter
+
+Args:
     author: the author of a message
     selection (optional): starter selected
 
@@ -97,12 +114,7 @@ Returns:
 """
 def chooseStarter(author, *, selection=None):
     if selection is None:
-        return "The options are as follows \
-                        \nBulbasaur \
-                        \nCharmander \
-                        \nSquirtle \
-                        \nPikachu \
-                        \nWhen you are ready to select use the command again followed by your selection, ex. (!starter Pikachu)"
+        return definitions.acceptableStarterMessage
     else:
         username = author.name
         data = player.loadSave(username)
@@ -110,7 +122,7 @@ def chooseStarter(author, *, selection=None):
             playerParty = getParty(None, data)
             if playerParty[0]["name"] == "":
                     selection = selection.upper()
-                    if selection in definitions.acceptableStarters:
+                    if selection in definitions.acceptableStarters.values():
                         selection = selection.capitalize()
                         starter = pokemon.Pokemon(selection, 5)
                         addPartyMember(username, starter)
@@ -124,7 +136,7 @@ def chooseStarter(author, *, selection=None):
             else:
                 return "You cannot choose a second starter!"
         else:
-            return "You must use !ready to create a save file before you can play!"
+            return definitions.noSavefileMessage
 
 """
 Show a players party in a string
@@ -174,10 +186,37 @@ def showParty(username: str = None, playerParty: dict = None, showSlotNumbers: b
             else:
                 return message
     
+async def party(bot, author):
+    username = author.name
+    data = player.loadSave(username)
+    if data is not None:
+        playerParty = getParty(None, data)
+        if playerParty[0]["name"] != "":
+            # Party options other than choosing a starter
+            "TODO: Finish Party Options"
+            pass
+        else:
+            # Offer the player to choose a starter
+            while True:
+                await author.send(definitions.acceptableStarterMessage)
+                response = await helperFunctions.getResponse(bot, author)
+                if response is not None:
+                    response = response.content.strip().upper()
+                    if response in definitions.acceptableStarters:
+                        choice = definitions.acceptableStarters[str(response)]
+                        await author.send(chooseStarter(author, selection=choice))
+                        break
+                else:
+                    await author.send(definitions.timeoutMessage)
+                    break
+    else:
+        return definitions.noSavefileMessage
+
 """
 Helper function for the box command
 
-Args:
+Args
+    bot: discord bot
     author: author of a discord command
 """
 async def box(bot, author):
@@ -190,7 +229,7 @@ async def box(bot, author):
             action = definitions.boxOptionResponses[optionContent]
             match action:
                 case "show box inventory":
-                    inventory = party.showBox(username)
+                    inventory = showBox(username)
                     await author.send(inventory)
                 case "deposit a pokemon":
                     data = player.loadSave(username)
