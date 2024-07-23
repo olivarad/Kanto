@@ -62,35 +62,6 @@ async def party_command(context):
     author = context.author
     await party.party(bot, author)
 
-"""
-If no selection is given, the bot will display starter choices
-If a selection is given, the bot will add that to the players first party slot, provided they have not already recieved a starter and that it is a valid starter choice
-
-Args:
-    selection (optional): starter selected
-"""
-@bot.command()
-async def starter(context, *, selection=None):
-    author = context.author
-    await author.send(party.chooseStarter(author, selection=selection))
-
-"""
-If the player has a party, a message will be sent to them containing each party member and their currentHP
-If the pplayer does not have a party, a message will be sent to them about creating a save file and selecting a starter
-"""
-@bot.command()
-async def showParty(context):
-    author = context.author
-    username = author.name
-    await author.send(party.showParty(username))
-
-@bot.command()
-async def swapParty(context, slot1, slot2):
-    author = context.author
-    username = author.name
-    slot1, slot2 = int(slot1) - 1, int(slot2) - 1
-    await author.send(party.swapParty(username, slot1, slot2))
-
 @bot.command()
 async def box(context):
     author = context.author

@@ -186,6 +186,13 @@ def showParty(username: str = None, playerParty: dict = None, showSlotNumbers: b
             else:
                 return message
     
+"""
+Helper function for the party command
+
+Args
+    bot: discord bot
+    author: author of a discord command
+"""
 async def party(bot, author):
     username = author.name
     data = player.loadSave(username)
@@ -193,8 +200,22 @@ async def party(bot, author):
         playerParty = getParty(None, data)
         if playerParty[0]["name"] != "":
             # Party options other than choosing a starter
-            "TODO: Finish Party Options"
-            pass
+            while True:
+                await author.send(definitions.partyOptions)
+                response = await helperFunctions.getResponse(bot, author)
+                if response is not None:
+                    response = response.content.strip().upper()
+                    if response in definitions.partyOptions.upper():
+                        match response:
+                            case "1" | "SHOW PARTY":
+                                await author.send(showParty(None, playerParty))
+                                return
+                            case "2" | "SWAP PARTY ORDER":
+                                await swapParty(bot, author)
+                                return
+                else:
+                    await author.send(definitions.timeoutMessage)
+                    break
         else:
             # Offer the player to choose a starter
             while True:
@@ -355,26 +376,66 @@ def showBox(username: str = None, playerBox: dict = None, showSlotNumbers: bool 
 Swap two members in a players party
 
 Args:
-    username (string): the username of the player
-    slot1 (int): first pokemon slot
-    slot2 (int): second pokemon slot
+    bot: discord bot
+    author: author of a discord command
 
 Returns:
     A message indicating success, or debug data
 """
-def swapParty(username: str, slot1: int, slot2: int):
+async def swapParty(bot, author):
+    username = author.name
     data = player.loadSave(username)
     playerParty = getParty(None, data)
-    if 0 <= slot1 <= 5 and 0 <= slot2 <= 5 and slot1 != slot2:
-        if playerParty[slot1]["name"] != "" and playerParty[slot2]["name"] != "":
-            message = f"Before:\n\n{showParty(username)}\n\n"
-            tempSlot = playerParty[slot1]
-            playerParty[slot1] = playerParty[slot2]
-            playerParty[slot2] = tempSlot
-            player.saveData(username, data)
-            message += f"After:\n\n{showParty(username)}"
+    validSlots = []
+    for slot in playerParty:
+        if slot["name"] != "":
+            validSlots.append(slot)
         else:
-            return definitions.filledSlotsRequiredMessage
-    else:
-        return definitions.swapPartyInvalidSlotsMessage
-    return message
+            break
+    if len(validSlots) >= 2:
+        validSlotsNames = []
+        for slot in validSlots:
+            validSlotsNames.append(slot["name"])
+        while True:
+            message = definitions.swapPartyFirstSelectionMessage
+            for i in range(0, len(validSlotsNames)):
+                message += f"\n{i + 1}: {validSlotsNames[i]}"
+            await author.send(message)
+            response = await helperFunctions.getResponse(bot, author)
+            if response is not None:
+                response = response.content.strip()
+                try:
+                    if 0 < int(response) < len(validSlots) + 1:
+                        slot1value = int(response) - 1
+                        slot1 = validSlots[slot1value]
+                        break
+                except ValueError:
+                    pass
+            else:
+                await author.send(definitions.timeoutMessage)
+                return
+        while True:
+            message = definitions.swapPartySecondSelectionMessage
+            for i in range(0, len(validSlotsNames)):
+                message += f"\n{i + 1}: {validSlotsNames[i]}"
+            await author.send(message)
+            response = await helperFunctions.getResponse(bot, author)
+            if response is not None:
+                response = response.content.strip()
+                try:
+                    if 0 < int(response) < len(validSlots) + 1:
+                        slot2value = int(response) - 1
+                        slot2 = validSlots[slot2value]
+                        break
+                except ValueError:
+                    pass
+            else:
+                await author.send(definitions.timeoutMessage)
+                return
+        message = f"Before:\n\n{showParty(username)}\n\n"
+        tempSlot = slot1
+        playerParty[slot1value] = slot2
+        playerParty[slot2value] = tempSlot
+        player.saveData(username, data)
+        message += f"After:\n\n{showParty(username)}"
+        await author.send(message)

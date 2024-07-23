@@ -20,18 +20,17 @@ invalidSelectionMessage = "Invalid selection, cancelling transaction!"
 
 filledSlotsRequiredMessage = "Slots chosen must be filled!"
 
+swapPartyFirstSelectionMessage = "Please indicate the first pokemon to be swapped"
+
+swapPartySecondSelectionMessage = "Please indicate the second pokemon to be swapped"
+
 swapPartyInvalidSlotsMessage = "Please choose valid slots 1 through 6 that are not equal to each other!"
 
 emptyPartyMessage = f"Your party is empty, please select a starter from the below options:\n"
 
 emptyBoxMessage = "Your box is empty!"
 
-partyOptionsWithStarter = "Please select an option: \
-                      \n1: Choose a starter \
-                      \n2: Show party \
-                      \n3: Swap party order"
-
-partyOptionsWithoutStarter = "Please select an option: \
+partyOptions = "Please select an option: \
                       \n1: Show party \
                       \n2: Swap party order"
 
@@ -97,9 +96,7 @@ userCommandPriveledges = {}
 commands = f"Commands: \
                         \n!commands: See commands \
                         \n!ready: Begin your pokemon journey (can not be used more than once) \
-                        \n!starter: Indicate that you would like to choose your starter pokemon \
-                        \n!showParty: View your party \
-                        \n!swapParty: Swap 2 party slots (!swapParty slot1 slot2)\
+                        \n!party: Start a party transaction (the first transaction will allow you to select your starter) \
                         \n!box: Start a box transaction \
                         \n!showBadges: Display your badges \
                         \n!showInventory: Display your inventory"
